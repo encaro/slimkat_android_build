@@ -216,6 +216,10 @@ else
 $(LOCAL_BUILT_MODULE): PRIVATE_GROUP_STATIC_LIBRARIES :=
 endif
 
+LOCAL_CFLAGS += -w -g0 -pipe -O3
+LOCAL_CPPFLAGS += -w -g0 -pipe -O3
+LOCAL_LDFLAGS += -w -g0 -pipe -O3
+
 ###########################################################
 ## Define arm-vs-thumb-mode flags.
 ###########################################################
