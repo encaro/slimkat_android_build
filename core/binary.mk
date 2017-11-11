@@ -125,15 +125,6 @@ ifeq ($(strip $(LOCAL_CLANG)),true)
 endif
 
 ####################################################
-## Add FDO flags if FDO is turned on and supported
-####################################################
-ifeq ($(strip $(LOCAL_NO_FDO_SUPPORT)),)
-  LOCAL_CFLAGS += $(TARGET_FDO_CFLAGS)
-  LOCAL_CPPFLAGS += $(TARGET_FDO_CFLAGS)
-  LOCAL_LDFLAGS += $(TARGET_FDO_CFLAGS)
-endif
-
-####################################################
 ## Add profiling flags if aprof is turned on
 ####################################################
 ifeq ($(strip $(LOCAL_ENABLE_APROF)),true)

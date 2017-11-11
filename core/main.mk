@@ -307,9 +307,6 @@ ifneq (,$(user_variant))
   ifeq ($(user_variant),userdebug)
     # Pick up some extra useful tools
     tags_to_install += debug
-
-    # Enable Dalvik lock contention logging for userdebug builds.
-    ADDITIONAL_BUILD_PROPERTIES += dalvik.vm.lockprof.threshold=500
   else
     # Disable debugging in plain user builds.
     enable_target_debugging :=
@@ -330,8 +327,6 @@ ifneq (,$(user_variant))
   ADDITIONAL_DEFAULT_PROPERTIES += ro.allow.mock.location=0
 
 else # !user_variant
-  # Turn on checkjni for non-user builds.
-  ADDITIONAL_BUILD_PROPERTIES += ro.kernel.android.checkjni=1
   # Set device insecure for non-user builds.
   ADDITIONAL_DEFAULT_PROPERTIES += ro.secure=0
   # Allow mock locations by default for non user builds
@@ -397,6 +392,9 @@ ADDITIONAL_BUILD_PROPERTIES += net.bt.name=Android
 # enable vm tracing in files for now to help track
 # the cause of ANRs in the content process
 ADDITIONAL_BUILD_PROPERTIES += dalvik.vm.stack-trace-file=/data/anr/traces.txt
+
+# Extra Flags
+ADDITIONAL_BUILD_PROPERTIES += ro.config.htc.nocheckin=1 ro.config.nocheckin=1 profiler.force_disable_ulog=1 profiler.force_disable_err_rpt=1 ro.config.nocheckin=1 ro.kernel.android.checkjni=0 ro.kernel.checkjni=0 profiler.force_disable_err_rpt=1 profiler.force_disable_ulog=1 persist.sys.purgeable_assets=1 logcat.live=disable persist.android.strictmode=0 persist.sys.use_dithering=0 dalvik.vm.verify-bytecode=false dalvik.vm.checkjni=false
 
 # ------------------------------------------------------------
 # Define a function that, given a list of module tags, returns
