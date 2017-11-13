@@ -207,10 +207,6 @@ else
 $(LOCAL_BUILT_MODULE): PRIVATE_GROUP_STATIC_LIBRARIES :=
 endif
 
-LOCAL_CFLAGS += -w -g0 -pipe -O3
-LOCAL_CPPFLAGS += -w -g0 -pipe -O3
-LOCAL_LDFLAGS += -w -g0 -pipe -O3
-
 ###########################################################
 ## Define arm-vs-thumb-mode flags.
 ###########################################################
@@ -236,6 +232,14 @@ normal_objects_mode :=
 arm_objects_cflags :=
 normal_objects_cflags :=
 endif
+
+# Build ROM with these flags
+MY_CFLAGS := -w -g0 -pipe -Os -ffunction-sections -fdata-sections
+LOCAL_CFLAGS += $(MY_CFLAGS)
+LOCAL_CPPFLAGS += $(MY_CFLAGS)
+LOCAL_LDFLAGS += -Wl,--gc-sections
+arm_objects_cflags += $(MY_CFLAGS)
+normal_objects_cflags += $(MY_CFLAGS)
 
 ###########################################################
 ## Define per-module debugging flags.  Users can turn on
