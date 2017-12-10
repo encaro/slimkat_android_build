@@ -233,13 +233,17 @@ arm_objects_cflags :=
 normal_objects_cflags :=
 endif
 
-# Build ROM with these flags
-MY_CFLAGS := -w -g0 -pipe -Os -ffunction-sections -fdata-sections
-LOCAL_CFLAGS += $(MY_CFLAGS)
-LOCAL_CPPFLAGS += $(MY_CFLAGS)
-LOCAL_LDFLAGS += -Wl,--gc-sections
-arm_objects_cflags += $(MY_CFLAGS)
-normal_objects_cflags += $(MY_CFLAGS)
+#################################
+## Build ROM with these flags. ##
+#################################
+
+O_FLAG := -Os
+GCC_FLAGS := -w -mthumb -pipe -fgcse-sm -fgcse-las -fgcse-after-reload -fivopts -fweb
+REMOVED_FLAGS := -g -DNDEBUG -marm
+LOCAL_CFLAGS += -w $(O_FLAG)
+LOCAL_CPPFLAGS += -w $(O_FLAG)
+arm_objects_cflags += $(filter-out $(DEBUG_FLAGS),$(arm_objects_cflags)) $(O_FLAG) $(GCC_CFLAGS) 
+normal_objects_cflags += $(filter-out $(DEBUG_FLAGS),$(normal_objects_cflags)) $(O_FLAG) $(GCC_CFLAGS)
 
 ###########################################################
 ## Define per-module debugging flags.  Users can turn on
