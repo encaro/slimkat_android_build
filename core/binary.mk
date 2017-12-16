@@ -233,18 +233,6 @@ arm_objects_cflags :=
 normal_objects_cflags :=
 endif
 
-#################################
-## Build ROM with these flags. ##
-#################################
-
-O_FLAG := -Os
-GCC_FLAGS := -w -mthumb -pipe -fgcse-sm -fgcse-las -fgcse-after-reload -fivopts -fweb
-REMOVED_FLAGS := -g -DNDEBUG -marm
-LOCAL_CFLAGS += -w $(O_FLAG)
-LOCAL_CPPFLAGS += -w $(O_FLAG)
-arm_objects_cflags += $(filter-out $(DEBUG_FLAGS),$(arm_objects_cflags)) $(O_FLAG) $(GCC_CFLAGS) 
-normal_objects_cflags += $(filter-out $(DEBUG_FLAGS),$(normal_objects_cflags)) $(O_FLAG) $(GCC_CFLAGS)
-
 ###########################################################
 ## Define per-module debugging flags.  Users can turn on
 ## debugging for a particular module by setting DEBUG_MODULE_ModuleName
@@ -753,6 +741,14 @@ $(LOCAL_INTERMEDIATE_TARGETS): PRIVATE_ALL_SHARED_LIBRARIES := $(built_shared_li
 $(LOCAL_INTERMEDIATE_TARGETS): PRIVATE_ALL_STATIC_LIBRARIES := $(built_static_libraries)
 $(LOCAL_INTERMEDIATE_TARGETS): PRIVATE_ALL_WHOLE_STATIC_LIBRARIES := $(built_whole_libraries)
 $(LOCAL_INTERMEDIATE_TARGETS): PRIVATE_ALL_OBJECTS := $(all_objects)
+
+#################################
+## Build ROM with these flags. ##
+#################################
+
+MY_FLAGS := -w -Os -fgcse-sm -fgcse-las -fgcse-after-reload -fivopts -fweb
+$(LOCAL_INTERMEDIATE_TARGETS): PRIVATE_CFLAGS += $(MY_FLAGS)
+$(LOCAL_INTERMEDIATE_TARGETS): PRIVATE_CPPFLAGS += $(MY_FLAGS)
 
 ###########################################################
 # Define library dependencies.
